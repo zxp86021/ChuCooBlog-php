@@ -97,6 +97,8 @@ if ($route[1] == 'login') {
             exit;
         }
 
+        $input = json_decode(file_get_contents('php://input'), TRUE);
+
         $authors = json_decode(file_get_contents('./authors.json'), TRUE);
 
         if (is_null($authors)) {
