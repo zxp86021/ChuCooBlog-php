@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 /**
  * Created by PhpStorm.
  * User: zxp86021
