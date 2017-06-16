@@ -436,23 +436,33 @@ if ($route[1] == 'login') {
 
         $tmp = [];
 
+        $deleted_flag = false;
+        
         foreach ($posts as $post) {
             if ($post['id'] != $route[2]) {
                 array_push($tmp, $post);
             } else {
                 $deleted = $post;
+                
+                $$deleted_flag = true;
             }
         }
-
-        $fp = fopen('./posts.json', 'w');
-
-        fwrite($fp, json_encode($tmp, JSON_UNESCAPED_UNICODE));
-
-        fclose($fp);
         
-        $remain = count($tmp); // 剩下幾篇文章
+        if ($deleted_flag) {
+            $fp = fopen('./posts.json', 'w');
 
-        echo json_encode(['remain' => $remain], JSON_UNESCAPED_UNICODE);
+            fwrite($fp, json_encode($tmp, JSON_UNESCAPED_UNICODE));
+
+            fclose($fp);
+        
+            $remain = count($tmp); // 剩下幾篇文章
+
+            echo json_encode(['remain' => $remain], JSON_UNESCAPED_UNICODE);
+        } else {
+            http_response_code(404);
+
+            echo json_encode(['message' => '沒有這則文章'], JSON_UNESCAPED_UNICODE);
+        }
 
         exit;
     } else {
