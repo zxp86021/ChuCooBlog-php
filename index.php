@@ -250,6 +250,8 @@ if ($route[1] == 'login') {
         if (empty($route[2])) {
             if (is_null($posts)) {
                 $posts = [];
+
+                http_response_code(204);
             }
 
             echo json_encode($posts, JSON_UNESCAPED_UNICODE);
