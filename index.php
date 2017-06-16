@@ -17,7 +17,7 @@ $route = explode('/',$uri);
 
 
 if ( empty($_SESSION['username']) ) {
-    if ( $route[1] != 'login' || ($route[1] != 'authors' && $method != 'POST') ) {
+    if ( ($route[1] != 'login' || $route[1] != 'authors') && $method != 'POST' ) {
         http_response_code(401);
         echo json_encode(['message' => '請先登入'], JSON_UNESCAPED_UNICODE);
         exit;
