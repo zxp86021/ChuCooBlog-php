@@ -15,7 +15,6 @@ $uri = str_replace('/index.php', '', $_SERVER['REQUEST_URI']);
 
 $route = explode('/',$uri);
 
-
 if ( empty($_SESSION['username']) ) {
     if ( ($route[1] != 'login' || $route[1] != 'authors') && $method != 'POST' ) {
         http_response_code(401);
@@ -450,8 +449,10 @@ if ($route[1] == 'login') {
         fwrite($fp, json_encode($tmp, JSON_UNESCAPED_UNICODE));
 
         fclose($fp);
+        
+        $remain = count($tmp); // 剩下幾篇文章
 
-        echo json_encode($deleted, JSON_UNESCAPED_UNICODE);
+        echo json_encode(['remain' => $remain], JSON_UNESCAPED_UNICODE);
 
         exit;
     } else {
