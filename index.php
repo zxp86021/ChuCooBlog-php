@@ -21,17 +21,9 @@ $route = explode('/',$uri);
 
 $input = json_decode(file_get_contents('php://input'), TRUE);
 
-require_once ('Exceptions/Handler.php');
+require_once (__DIR__ . '/Exceptions/Handler.php');
 
 $exception_handler = new Handler();
-
-if ( empty($_SESSION['username']) ) {
-    if ( ($route[1] != 'login' || $route[1] != 'authors') && $method != 'POST' ) {
-        $exception_handler->Unauthorized();
-
-        exit;
-    }
-}
 
 if (!file_exists(__DIR__ . '/Storage/authors.json')) {
     $fp = fopen(__DIR__ . '/Storage/authors.json', 'w');
@@ -50,7 +42,7 @@ if (!file_exists(__DIR__ . '/Storage/posts.json')) {
 }
 
 if ($route[1] == 'login') {
-    require_once ('Controllers/AuthController.php');
+    require_once (__DIR__ . '/Controllers/AuthController.php');
 
     $controller = new AuthController();
 
@@ -64,11 +56,17 @@ if ($route[1] == 'login') {
         exit;
     }
 } else if ($route[1] == 'authors') {
-    require_once ('Controllers/AuthorController.php');
+    require_once (__DIR__ . '/Controllers/AuthorController.php');
 
     $controller = new AuthorController();
 
     if ($method == 'GET') {
+        if ( empty($_SESSION['username']) ) {
+            $exception_handler->Unauthorized();
+
+            exit;
+        }
+
         if (empty($route[2])) {
             $controller->index();
 
@@ -89,6 +87,12 @@ if ($route[1] == 'login') {
 
         exit;
     } else if ($method == 'PATCH') {
+        if ( empty($_SESSION['username']) ) {
+            $exception_handler->Unauthorized();
+
+            exit;
+        }
+
         if (empty($route[2])) {
             $exception_handler->MethodNotAllowed();
 
@@ -104,7 +108,7 @@ if ($route[1] == 'login') {
         exit;
     }
 } else if ($route[1] == 'posts') {
-    require_once ('Controllers/PostController.php');
+    require_once (__DIR__ . '/Controllers/PostController.php');
 
     $controller = new PostController();
 
@@ -119,6 +123,12 @@ if ($route[1] == 'login') {
 
         exit;
     } else if ($method == 'POST') {
+        if ( empty($_SESSION['username']) ) {
+            $exception_handler->Unauthorized();
+
+            exit;
+        }
+
         if (!empty($route[2])) {
             $exception_handler->MethodNotAllowed();
 
@@ -129,6 +139,12 @@ if ($route[1] == 'login') {
 
         exit;
     } else if ($method == 'PATCH') {
+        if ( empty($_SESSION['username']) ) {
+            $exception_handler->Unauthorized();
+
+            exit;
+        }
+
         if (empty($route[2])) {
             $exception_handler->MethodNotAllowed();
 
@@ -139,6 +155,12 @@ if ($route[1] == 'login') {
 
         exit;
     } else if ($method == 'DELETE') {
+        if ( empty($_SESSION['username']) ) {
+            $exception_handler->Unauthorized();
+
+            exit;
+        }
+
         if (empty($route[2])) {
             $exception_handler->MethodNotAllowed();
 
