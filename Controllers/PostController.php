@@ -86,6 +86,8 @@ class PostController
         } while (in_array($pid, $this->posts) || empty($pid));
 
         $now = new DateTime('now');
+        
+        $posts = $this->posts;
 
         $insert = [
             'id' => $pid,
@@ -97,7 +99,7 @@ class PostController
             'tags' => $input['tags']
         ];
 
-        array_push($posts, $insert);
+        array_push($this->posts, $insert);
 
         $fp = fopen(__DIR__ . '/../Storage/posts.json', 'w');
 
