@@ -99,7 +99,7 @@ class PostController
             'tags' => $input['tags']
         ];
 
-        array_push($this->posts, $insert);
+        array_push($posts, $insert);
 
         $fp = fopen(__DIR__ . '/../Storage/posts.json', 'w');
 
