@@ -99,6 +99,8 @@ class AuthorController
             'gender' => $input['gender'],
             'address' => $input['address'],
         ];
+        
+        $authors = $this->authors;
 
         array_push($authors, $insert);
 
