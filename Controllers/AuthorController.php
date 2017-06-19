@@ -122,9 +122,9 @@ class AuthorController
 
         foreach ($this->authors as $author) {
             if ($author['username'] == $username && $author['username'] == $_SESSION['username']) {
-                if (!empty($input['password'])) {
-                    $author['password'] = $input['password'];
-                }
+                //if (!empty($input['password'])) {
+                //    $author['password'] = $input['password'];
+                //}
 
                 if (!empty($input['name'])) {
                     $author['name'] = $input['name'];
