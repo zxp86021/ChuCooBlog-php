@@ -25,7 +25,7 @@ $route = explode('/',$uri);
 
 $input = json_decode(file_get_contents('php://input'), TRUE);
 
-require_once (__DIR__ . '/Exceptions/Handler.php');
+require_once(__DIR__ . '/../Exceptions/Handler.php');
 
 $exception_handler = new Handler();
 
@@ -46,7 +46,7 @@ if (!file_exists(__DIR__ . '/Storage/posts.json')) {
 }
 
 if ($route[1] == 'login' || $route[1] == 'logout') {
-    require_once (__DIR__ . '/Controllers/AuthController.php');
+    require_once(__DIR__ . '/../Controllers/AuthController.php');
 
     $controller = new AuthController();
 
@@ -64,7 +64,7 @@ if ($route[1] == 'login' || $route[1] == 'logout') {
         exit;
     }
 } else if ($route[1] == 'authors') {
-    require_once (__DIR__ . '/Controllers/AuthorController.php');
+    require_once(__DIR__ . '/../Controllers/AuthorController.php');
 
     $controller = new AuthorController();
 
@@ -116,7 +116,7 @@ if ($route[1] == 'login' || $route[1] == 'logout') {
         exit;
     }
 } else if ($route[1] == 'posts') {
-    require_once (__DIR__ . '/Controllers/PostController.php');
+    require_once(__DIR__ . '/../Controllers/PostController.php');
 
     $controller = new PostController();
 
