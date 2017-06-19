@@ -177,7 +177,7 @@ class PostController
             } else {
                 $deleted = $post;
 
-                $$deleted_flag = true;
+                $deleted_flag = true;
             }
         }
 
