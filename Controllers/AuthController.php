@@ -8,7 +8,7 @@
  */
 class AuthController
 {
-    public function postLogin($input) {
+    public function Login($input) {
         $authors = json_decode(file_get_contents(__DIR__ . '/../Storage/authors.json'), TRUE);
 
         $login = false;
@@ -34,5 +34,10 @@ class AuthController
 
             echo json_encode(['message' => '帳號或密碼錯誤'], JSON_UNESCAPED_UNICODE);
         }
+    }
+
+    public function Logout() {
+        session_unset();
+        session_destroy();
     }
 }

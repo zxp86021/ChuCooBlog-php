@@ -45,13 +45,17 @@ if (!file_exists(__DIR__ . '/Storage/posts.json')) {
     fclose($fp);
 }
 
-if ($route[1] == 'login') {
+if ($route[1] == 'login' || $route[1] == 'logout') {
     require_once (__DIR__ . '/Controllers/AuthController.php');
 
     $controller = new AuthController();
 
     if ($method == 'POST') {
-        $controller->postLogin($input);
+        if ($route[1] == 'login') {
+            $controller->Login($input);
+        } else {
+            $controller->Logout();
+        }
 
         exit;
     } else {
