@@ -10,6 +10,7 @@ if ( isset($_SERVER['HTTP_ORIGIN']) ) {
 }
 header('Access-Control-Allow-Method: *');
 header('Access-Control-Allow-Headers: *');
+header('Access-Control-Max-Age: 18600');
 
 /**
  * Created by PhpStorm.
@@ -28,6 +29,10 @@ $input = json_decode(file_get_contents('php://input'), TRUE);
 require_once(__DIR__ . '/../Exceptions/Handler.php');
 
 $exception_handler = new Handler();
+
+if ($method == 'OPTIONS') {
+    exit;
+}
 
 if (!file_exists(__DIR__ . '/Storage/authors.json')) {
     $fp = fopen(__DIR__ . '/Storage/authors.json', 'w');
