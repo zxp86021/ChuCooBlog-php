@@ -3,14 +3,13 @@ session_start();
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS');
+
 if ( isset($_SERVER['HTTP_ORIGIN']) ) {
     header('Access-Control-Allow-Origin:'.$_SERVER['HTTP_ORIGIN']);
 } else {
     header('Access-Control-Allow-Origin: *');
 }
-header('Access-Control-Allow-Method: *');
-header('Access-Control-Allow-Headers: *');
-header('Access-Control-Max-Age: 18600');
 
 /**
  * Created by PhpStorm.
@@ -31,6 +30,15 @@ require_once(__DIR__ . '/../Exceptions/Handler.php');
 $exception_handler = new Handler();
 
 if ($method == 'OPTIONS') {
+    $request_headers = getallheaders();
+
+    if ( isset($request_headers['Access-Control-Request-Headers']) ) {
+        $ACRH = $request_headers['Access-Control-Request-Headers'];
+        header('Access-Control-Allow-Headers: '. $ACRH);
+    }
+
+    header('Access-Control-Max-Age: 18600');
+
     exit;
 }
 
