@@ -30,7 +30,7 @@ require_once(__DIR__ . '/../Exceptions/Handler.php');
 $exception_handler = new Handler();
 
 if ($method == 'OPTIONS') {
-    $request_headers = getallheaders();
+    $request_headers = allheaders();
 
     if ( isset($request_headers['Access-Control-Request-Headers']) ) {
         $ACRH = $request_headers['Access-Control-Request-Headers'];
@@ -200,4 +200,19 @@ if ($route[1] == 'login' || $route[1] == 'logout') {
     $exception_handler->MethodNotAllowed();
 
     exit;
+}
+
+function allheaders()
+{
+    if (!is_array($_SERVER)) {
+        return array();
+    }
+
+    $headers = array();
+    foreach ($_SERVER as $name => $value) {
+        if (substr($name, 0, 5) == 'HTTP_') {
+            $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+        }
+    }
+    return $headers;
 }
