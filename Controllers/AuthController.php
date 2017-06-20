@@ -8,14 +8,18 @@
  */
 class AuthController
 {
+    function __construct() {
+        if ( is_null(json_decode(file_get_contents(__DIR__ . '/../Storage/authors.json'), TRUE)) ) {
+            $this->authors = [];
+        } else {
+            $this->authors = json_decode(file_get_contents(__DIR__ . '/../Storage/authors.json'), TRUE);
+        }
+    }
+    
     public function Login($input) {
-        $authors = json_decode(file_get_contents(__DIR__ . '/../Storage/authors.json'), TRUE);
+        $authors = $this->authors;
 
         $login = false;
-
-        if (is_null($authors)) {
-            $authors = [];
-        }
 
         foreach ($authors as $author) {
             if ($input['username'] == $author['username'] && $input['password'] == $author['password']) {
@@ -33,6 +37,24 @@ class AuthController
             http_response_code(401);
 
             echo json_encode(['message' => '帳號或密碼錯誤'], JSON_UNESCAPED_UNICODE);
+        }
+    }
+    
+    public function LoginStatus() {
+        if (isset($_SESSION['username'])) {
+            $authors = $this->authors;
+
+            foreach ($authors as $author) {
+                if ($_SESSION['username'] == $author['username']) {
+                    echo json_encode($author, JSON_UNESCAPED_UNICODE);
+
+                    exit;
+                }
+            }   
+        } else {
+            http_response_code(401);
+
+            echo json_encode(['message' => '沒有登入 ^^'], JSON_UNESCAPED_UNICODE);
         }
     }
 
