@@ -34,16 +34,16 @@ if ($method == 'OPTIONS') {
     exit;
 }
 
-if (!file_exists(__DIR__ . '/Storage/authors.json')) {
-    $fp = fopen(__DIR__ . '/Storage/authors.json', 'w');
+if (!file_exists(__DIR__ . '/../Storage/authors.json')) {
+    $fp = fopen(__DIR__ . '/../Storage/authors.json', 'w');
 
     fwrite($fp, json_encode([], JSON_UNESCAPED_UNICODE));
 
     fclose($fp);
 }
 
-if (!file_exists(__DIR__ . '/Storage/posts.json')) {
-    $fp = fopen(__DIR__ . '/Storage/posts.json', 'w');
+if (!file_exists(__DIR__ . '/../Storage/posts.json')) {
+    $fp = fopen(__DIR__ . '/../Storage/posts.json', 'w');
 
     fwrite($fp, json_encode([], JSON_UNESCAPED_UNICODE));
 
