@@ -58,17 +58,17 @@ if (!file_exists(__DIR__ . '/../Storage/posts.json')) {
     fclose($fp);
 }
 
-if ($route[1] == 'login' || $route[1] == 'logout') {
+if ($route[1] == 'login') {
     require_once(__DIR__ . '/../Controllers/AuthController.php');
 
     $controller = new AuthController();
 
     if ($method == 'POST') {
-        if ($route[1] == 'login') {
-            $controller->Login($input);
-        } else {
-            $controller->Logout();
-        }
+        $controller->Login($input);
+
+        exit;
+    } else if ($method == 'GET') {
+        $controller->LoginStatus();
 
         exit;
     } else {
@@ -76,7 +76,21 @@ if ($route[1] == 'login' || $route[1] == 'logout') {
 
         exit;
     }
-} else if ($route[1] == 'authors') {
+} else if ($route[1] == 'logout') {
+    require_once(__DIR__ . '/../Controllers/AuthController.php');
+
+    $controller = new AuthController();
+
+    if ($method == 'POST') {
+        $controller->Logout();
+        
+        exit;
+    } else {
+        $exception_handler->MethodNotAllowed();
+
+        exit;
+    }
+}else if ($route[1] == 'authors') {
     require_once(__DIR__ . '/../Controllers/AuthorController.php');
 
     $controller = new AuthorController();
